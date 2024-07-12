@@ -34,7 +34,7 @@ const Header = () => {
         </div>
         <Link to="/checkout">
           <div className="header-optionBasket">
-            <img src={shoppingCart} />
+            <img src={shoppingCart} alt="shopping-cart" />
             <span className="header-optionLineTwo header-basketCount">5</span>
           </div>
         </Link>
