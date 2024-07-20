@@ -4,7 +4,7 @@ import "./Product.css";
 import { useAuth } from "../context/GlobalState";
 
 const Product = ({ title, price, image, rating, id }) => {
-  const { dispatch, basket } = useAuth();
+  const { dispatch } = useAuth();
   const addToBasket = () => {
     dispatch({
       type: "ADD_TO_BASKET",
@@ -17,8 +17,6 @@ const Product = ({ title, price, image, rating, id }) => {
       },
     });
   };
-
-  console.log(basket);
 
   return (
     <div className="product">
@@ -33,7 +31,7 @@ const Product = ({ title, price, image, rating, id }) => {
         {Array(rating)
           .fill()
           .map((_, i) => (
-            <p>
+            <p key={i}>
               <img src={starIcon} alt="starIcon" />
             </p>
           ))}
