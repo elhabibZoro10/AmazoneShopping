@@ -6,6 +6,7 @@ import { useAuth } from "./context/GlobalState";
 import { auth } from "./firebase";
 import Home from "./components/Home";
 import Checkout from "./components/Checkout";
+import Payment from "./components/Payment";
 
 const App = () => {
   const { dispatch } = useAuth();
@@ -47,6 +48,15 @@ const App = () => {
             <>
               <Header />
               <Checkout />
+            </>
+          }
+        />
+        <Route
+          path="/payment"
+          element={
+            <>
+              <Header />
+              <Payment />
             </>
           }
         />
