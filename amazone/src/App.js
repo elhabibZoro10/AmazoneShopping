@@ -1,18 +1,23 @@
-import React, { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import { React, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+import Checkout from "./components/Checkout";
 import Header from "./components/Header";
+import Home from "./components/Home";
 import Login from "./components/Login";
+import Orders from "./components/Orders";
+import Payment from "./components/Payment";
 import { useAuth } from "./context/GlobalState";
 import { auth } from "./firebase";
-import Home from "./components/Home";
-import Checkout from "./components/Checkout";
-import Payment from "./components/Payment";
 
 const App = () => {
   const { dispatch } = useAuth();
-
+  const stripePromise = loadStripe(
+    "pk_test_51PfJ5kRsQaWJBs1ssY1vqnYkEY3iv3TiTf48dXdNkuBXTkbE860W89NLdgENbYM3LLRdkX1wXjoJlNAK8zOT5QNE008tEhijfN"
+  );
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+    auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         dispatch({
           type: "SET_USER",
@@ -25,11 +30,7 @@ const App = () => {
         });
       }
     });
-
-    // Cleanup subscription on unmount
-    return () => unsubscribe();
-  }, [dispatch]);
-
+  }, []);
   return (
     <div className="app">
       <Routes>
@@ -56,7 +57,18 @@ const App = () => {
           element={
             <>
               <Header />
-              <Payment />
+              <Elements stripe={stripePromise}>
+                <Payment />
+              </Elements>
+            </>
+          }
+        />
+        <Route
+          path="/orders"
+          element={
+            <>
+              <Header />
+              <Orders />
             </>
           }
         />
